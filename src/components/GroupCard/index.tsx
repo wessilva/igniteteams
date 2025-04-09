@@ -1,5 +1,6 @@
 import { Text, TouchableOpacity, View } from "react-native"
 import { UsersThree } from "phosphor-react-native"
+import { useState } from "react"
 
 type GroupCardProps = {
     title: string;
@@ -7,6 +8,7 @@ type GroupCardProps = {
 }
 
 export const GroupCard = ({ title }: GroupCardProps) => {
+
     return (
         <View className="flex-1  mx-6 items-center ">
             <TouchableOpacity className=" w-full  p-7  mb-3 flex flex-row  items-center  h-[100px] bg-GRAY_500 rounded-md ">

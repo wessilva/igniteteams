@@ -10,7 +10,7 @@ import './global.css';
 export default function App() {
   const [fontsLoaded] = useFonts({ Roboto_400Regular, Roboto_700Bold })
   return (
-    <View className="flex-1 ">
+    <View className="flex-1 bg-slate-600">
 
       <StatusBar
         style="light"
