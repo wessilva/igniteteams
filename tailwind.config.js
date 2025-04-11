@@ -1,3 +1,4 @@
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./App.{js,ts,tsx}', './src/**/*.{js,ts,tsx}'],
@@ -5,6 +6,9 @@ module.exports = {
   presets: [require('nativewind/preset')],
   theme: {
     extend: {
+      placeholderColor: {
+        DEFAULT: '#323238',
+      },
       colors: {
         WHITE: '#FFFFFF',
 
@@ -20,7 +24,9 @@ module.exports = {
         GRAY_400: '#323238',
         GRAY_300: '#7C7C8A',
         GRAY_200: '#C4C4CC',
-        GRAY_100: '#E1E1E6'
+        GRAY_100: '#E1E1E6',
+
+
       },
       fontFamily: {
         REGULAR: 'Roboto_400Regular',

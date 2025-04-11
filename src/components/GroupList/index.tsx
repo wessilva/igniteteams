@@ -1,22 +1,25 @@
-import { FlatList, Text, View } from "react-native"
+import { FlatList, View } from "react-native"
+import { GroupCard } from "../GroupCard"
+import { ListEmpty } from "../ListEmpty"
 
 
-export const GroupList = () => {
+type GroupListProps = {
+    groups: string[]
+}
+export const GroupList = ({ groups }: GroupListProps) => {
     return (
-        <View className=" flex-1  bg-red-600 ">
+
+        <View className="flex-1">
             <FlatList
-                data={['Galera RN', 'Galera React', 'Galera JS', 'Galera TS', 'Galera HTML', 'Galera CSS', 'Galera PHP', 'Galera Java', 'Galera C#', 'Galera C++', 'Galera C', 'Galera Ruby', 'Galera Swift', 'Galera Kotlin', 'Galera Dart', 'Galera Go', 'Galera Rust', 'Galera Elixir', 'Galera Haskell', 'Galera Scala']}
+                data={groups}
                 keyExtractor={(item) => item}
                 renderItem={({ item }) => (
-                    <View className="bg-slate-800 rounded-lg p-4 m-2 ">
-                        <Text className="text-white text-lg font-bold">{item}</Text>
-                    </View>
+                    <GroupCard title={item} />
                 )}
-
-            >
-
-            </FlatList>
-
+                ListEmptyComponent={<ListEmpty title="Que tal cadastrar a primeira turma ?" />}
+            />
         </View>
+
+
     )
 }
