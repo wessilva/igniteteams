@@ -1,34 +1,27 @@
-import { SafeAreaView, View } from "react-native";
-import { GroupCard } from "~/components/GroupCard";
-import { Header } from "~/components/Header";
-import { Highlight } from "~/components/Highlight";
-import { MainButton } from "~/components/MainButton";
-import { useState } from "react";
-import { FlatList } from "react-native";
-import { GroupList } from "~/components/GroupList";
-import { useNavigation } from "@react-navigation/native";
-import { useRoute } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { SafeAreaView, View } from 'react-native';
 
-// Defina o tipo das rotas da sua aplicação
-type RootStackParamList = {
-    home: undefined;
-    "new-team": undefined;
-    players: { group: string };
-    // Adicione outras rotas conforme necessário
-};
+import { Header } from '~/components/Header';
+import { Highlight } from '~/components/Highlight';
+import { MainButton } from '~/components/MainButton';
+import { GroupList } from '~/components/GroupList';
 
-// Defina o tipo de navegação
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+import { useSelector } from 'react-redux';
+import { RootState } from '~/store';
+
+import type { RootStackParamList } from '~/types/types';
+
 type NavigationProps = NativeStackNavigationProp<RootStackParamList>;
 
 export const HomeScreen = () => {
-    const [groups, setGroups] = useState<string[]>([]);
+    const teams = useSelector((state: RootState) => state.team.teams);
 
     const navigation = useNavigation<NavigationProps>();
-    const route = useRoute();
 
-    const addGroup = () => {
-        navigation.navigate('new-team');
+    const handleAddGroup = () => {
+        navigation.navigate('newteam');
     }
 
     return (
@@ -36,9 +29,14 @@ export const HomeScreen = () => {
             <View className="flex-1  justify-between  ">
                 <View className="flex-1 ">
                     <Header />
-                    <Highlight title="Turmas" subtitle="Jogue com a galera!" />
-                    <GroupList groups={groups} />
-                    <MainButton title="Criar Turma " onPress={addGroup} />
+                    <Highlight
+                        title="Turmas"
+                        subtitle="Jogue com a galera!" />
+                    <GroupList
+                        groups={teams} />
+                    <MainButton
+                        title="Criar Turma "
+                        onPress={handleAddGroup} />
                 </View>
             </View>
         </SafeAreaView>

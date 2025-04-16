@@ -3,18 +3,38 @@ import { GroupCard } from "../GroupCard"
 import { ListEmpty } from "../ListEmpty"
 
 
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/native";
+import { Team } from "~/features/teamSlice";
+import { RootStackParamList } from "~/types/types";
+
+
+
+type NavigationProps = NativeStackNavigationProp<RootStackParamList>;
+
+
+
 type GroupListProps = {
-    groups: string[]
+    groups: Team[]
 }
 export const GroupList = ({ groups }: GroupListProps) => {
+
+    const navigation = useNavigation<NavigationProps>();
+
+    const editGroup = (team: Team) => {
+        navigation.navigate('players', { group: team.id });
+    }
+
+    const validGroups = Array.isArray(groups) ? groups : [];
+
     return (
 
         <View className="flex-1">
             <FlatList
-                data={groups}
-                keyExtractor={(item) => item}
+                data={validGroups}
+                keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                    <GroupCard title={item} />
+                    <GroupCard onPress={() => editGroup(item)} title={item.name} />
                 )}
                 ListEmptyComponent={<ListEmpty title="Que tal cadastrar a primeira turma ?" />}
             />
