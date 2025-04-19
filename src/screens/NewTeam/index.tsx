@@ -2,11 +2,14 @@ import { View } from "react-native"
 import { Header } from "~/components/Header"
 import { MainButton } from "~/components/MainButton"
 import { MainInput } from "~/components/MainInput"
-import { UsersThree } from "phosphor-react-native"
 import { Highlight } from "~/components/Highlight"
+import { showAppToast } from '~/utils/showAppToast';
 
+import { UsersThree } from "phosphor-react-native"
+import Toast from 'react-native-toast-message'
 import { useNavigation } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
+
 
 import { useDispatch } from "react-redux"
 import { useState } from "react"
@@ -21,10 +24,16 @@ export function NewTeam() {
     const navigation = useNavigation<NavigationProps>();
 
     const handleCreateTeam = () => {
-        if (teamName.trim())
-            dispatch(addTeam(teamName));
+        if (!teamName.trim()) {
+            showAppToast('error', 'Erro!', 'Adicione um nome para o time.')
+            return;
+        }
+        dispatch(addTeam(teamName));
         setTeamName('');
         navigation.navigate('home')
+        showAppToast('success', 'Sucesso!', 'Time criado com sucesso.')
+
+
     }
 
     return (
@@ -42,12 +51,13 @@ export function NewTeam() {
                     weight="regular" />
 
                 <Highlight
-                    title="Nova Turma"
-                    subtitle="Crie uma nova turma para adiconar pessoas " />
+                    title="Novo Grupo"
+                    subtitle="Crie um grupo para adicionar pessoas " />
 
                 <MainInput
                     inputValue={teamName}
-                    inputChange={setTeamName} />
+                    inputChange={setTeamName}
+                    placeholder="Nome do grupo" />
 
                 <View className="w-full ">
 

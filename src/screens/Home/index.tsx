@@ -30,12 +30,12 @@ export const HomeScreen = () => {
                 <View className="flex-1 ">
                     <Header />
                     <Highlight
-                        title="Turmas"
+                        title="Grupos"
                         subtitle="Jogue com a galera!" />
                     <GroupList
                         groups={teams} />
                     <MainButton
-                        title="Criar Turma "
+                        title="Criar Grupos "
                         onPress={handleAddGroup} />
                 </View>
             </View>

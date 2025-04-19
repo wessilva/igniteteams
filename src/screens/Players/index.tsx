@@ -7,6 +7,8 @@ import { MainInput } from "~/components/MainInput";
 import { TeamSelected } from "~/components/TeamSelected";
 import { ModalAlert } from "~/modalAlert";
 
+import Toast from 'react-native-toast-message'
+
 import { RootState } from "~/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
@@ -15,6 +17,7 @@ import { removeTeam, addPlayerToTeam, removePlayerFromTeam } from "~/features/te
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import type { RootStackParamList } from "~/types/types"
+import { showAppToast } from "~/utils/showAppToast";
 
 type NavigationProps = NativeStackNavigationProp<RootStackParamList>;
 
@@ -38,37 +41,50 @@ export function Players() {
     }
     const addPlayer = () => {
         if (!newPlayer.trim()) {
-            Alert.alert('Novo jogador', 'Informe o nome do jogador para adicionar.')
+
+            showAppToast('error', 'Erro!', 'Adicione um participante!')
             return;
         }
         if (!selectedTeam) {
-            setShowModal(true)
+
+            showAppToast('warning', 'Atenção!', 'Selecione um time para adicionar o jogador.')
             return;
         }
         dispatch(addPlayerToTeam({ teamName: group, playerName: newPlayer, teamType: selectedTeam }))
         console.log(newPlayer, selectedTeam);
         setNewPlayer('')
+
     }
     const handleRemoveTeams = async () => {
         if (currentTeam) {
             dispatch(removeTeam(currentTeam.id));
             navigation.navigate('home')
+
+            showAppToast('success', 'Removido!', 'Turma removida com sucesso.')
         }
     };
     const removePlayer = (playerId: string) => {
         if (!selectedTeam) return;
         dispatch(removePlayerFromTeam({ teamName: group, playerId, teamType: selectedTeam }));
+        Toast.show({
+            type: 'success', // Tipo pré-definido
+            text1: 'Sucesso!',
+            text2: 'Participante removido com sucesso!.',
+            visibilityTime: 3000, // 3 segundos
+            autoHide: true, // Fecha automaticamente
+        });
+        showAppToast('success', 'Removido!', 'Participante removido com sucesso.')
     };
 
     return (
         <View className="flex-1 bg-GRAY_600">
             <Header showBackButton />
-            <Highlight title="Nome da turma " subtitle="Selecione a pessoa que deseja adicionar ao time" />
-            <MainInput showButton inputValue={newPlayer} inputChange={setNewPlayer} onPress={addPlayer} />
+            <Highlight title="Nome da Grupo " subtitle="Selecione o jogador que deseja adicionar ao time" />
+            <MainInput placeholder="Adicione um jogador" showButton inputValue={newPlayer} inputChange={setNewPlayer} onPress={addPlayer} />
             <TeamSelected onPressA={() => handleTeamSelected("A")} onPressB={() => handleTeamSelected("B")} selectedTeam={selectedTeam} countPlayers={playerList?.length || 0} />
             <ModalAlert visible={showModal} onClose={() => setShowModal(false)} />
             <ListTeams players={playerList} onRemovePlayer={(playerId) => removePlayer(playerId)} />
-            <MainButton title="Remover Turma " variant="secondary" onPress={handleRemoveTeams} />
+            <MainButton title="Remover grupo " variant="secondary" onPress={handleRemoveTeams} />
         </View>
     )
 }

@@ -36,7 +36,7 @@ export const GroupList = ({ groups }: GroupListProps) => {
                 renderItem={({ item }) => (
                     <GroupCard onPress={() => editGroup(item)} title={item.name} />
                 )}
-                ListEmptyComponent={<ListEmpty title="Que tal cadastrar a primeira turma ?" />}
+                ListEmptyComponent={<ListEmpty title="Cadastre a primeira turma" />}
             />
         </View>
 

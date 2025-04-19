@@ -6,6 +6,7 @@ type MainInputProps = {
     inputValue?: string
     inputValues?: string
     inputChange?: (text: string) => void
+    placeholder?: string
 
     cor?: string
     tamanho?: number
@@ -13,7 +14,7 @@ type MainInputProps = {
     name?: string
 }
 
-export const MainInput = ({ showButton = false, inputValue, inputChange, onPress }: MainInputProps) => {
+export const MainInput = ({ showButton = false, inputValue, inputChange, onPress, placeholder }: MainInputProps) => {
 
     return (
         <View className="flex flex-row    h-14  bg-GRAY_700 mx-3 rounded-md ">
@@ -21,8 +22,8 @@ export const MainInput = ({ showButton = false, inputValue, inputChange, onPress
                 <TextInput
                     value={inputValue}
                     onChangeText={inputChange}
-                    placeholderTextColor={"#323238"}
-                    placeholder="Nome da Turma"
+                    placeholderTextColor={"#4d4d63"}
+                    placeholder={placeholder}
                     className="  text-MD pl-4 h-full rounded-md  text-WHITE  " />
             </View>
             {showButton &&
